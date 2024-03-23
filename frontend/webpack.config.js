@@ -8,7 +8,7 @@ module.exports = {
     error: path.resolve(__dirname, 'src', 'entries', '404Entry.jsx'),
   },
   output: {
-    path: path.resolve(__dirname, 'BlissRoot', 'static', 'js'),
+    path: path.resolve(__dirname, 'build'),
     filename: '[name].bundle.js',
   },
   mode: 'production',

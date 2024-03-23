@@ -3,7 +3,7 @@ import pathlib
 import flask
 from flask import request, jsonify
 import requests
-from flask_cors import CORS
+# from flask_cors import CORS
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 app = flask.Flask(__name__)
@@ -14,13 +14,13 @@ app.secret_key = os.urandom(24)
 
 app.static_folder = 'static'
 
-CORS(app, resources={r"/*": {"origins": ["http://test.btschwartz.com", 
-                                         "https://test.btschwartz.com",
-                                         "http://localhost:3000",
-                                         "http://127.0.0.1:5000"
+# CORS(app, resources={r"/*": {"origins": ["http://test.btschwartz.com", 
+#                                          "https://test.btschwartz.com",
+#                                          "http://localhost:3000",
+#                                          "http://127.0.0.1:5000"
                                          
-                                         ]}})
-redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
+#                                          ]}})
+redis_url = os.getenv('REDIS_URL', 'redis://localhost:6379')
 redis_client = redis.from_url(redis_url)
 
 limiter = Limiter(

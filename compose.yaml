@@ -1,0 +1,49 @@
+services:
+  
+  redis:
+    container_name: lp-redis
+    image: redis
+    ports:
+      - 6379:6379
+    profiles:
+      - production
+  
+  frontend-build:
+    container_name: lp-fe-build
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./build:/src/build
+    command: npx webpack --config /src/webpack.config.js
+    profiles:
+      - build
+
+  server:
+    container_name: lp-server
+    build:
+      context: ./BlissRoot
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - redis
+    ports:
+      - 8000:8000
+    volumes:
+      - ./build:/app/build
+    command: /start-server.sh
+    profiles:
+      - production
+
+
+   # # cp /app/build/bundle.js /app/static/js/ &&
+   # frontend-dev:
+    #   container_name: bliss-portfolio-frontend-dev
+    #   build:
+    #     context: ./frontend
+    #     dockerfile: Dockerfile
+    #   ports:
+    #     - 3000:3000
+    #   command: npm run start
+    #   profiles:
+    #     - development
